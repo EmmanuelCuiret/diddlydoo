@@ -1,0 +1,124 @@
+[
+  {
+    "id": "6f2bb9bd0c4f",
+    "name": "ONE DATE, NO ATTENDEE",
+    "author": "Emmanuel",
+    "description": "Evénement avec 1 date, mais sans participant.",
+    "dates": [
+      "2025-02-03"
+    ],
+    "created_at": "2025-02-08T14:21:45.276Z",
+    "num_modification": 6,
+    "last_modification": "2025-02-12T14:52:35.737Z",
+    "attendees": []
+  },
+  {
+    "id": "d719649c5432",
+    "name": "NO DATE",
+    "author": "Emmanuel",
+    "description": "Un évenement sans date",
+    "dates": [],
+    "created_at": "2025-02-08T12:47:57.784Z",
+    "num_modification": 4,
+    "last_modification": "2025-02-11T22:26:11.191Z",
+    "attendees": []
+  },
+  {
+    "id": "f5b6564b5dc4",
+    "name": "My sweet",
+    "description": "I am going to be 16, let us all party together",
+    "author": "John Deed test",
+    "dates": [
+      "2025-03-17",
+      "2025-03-18",
+      "2025-03-21"
+    ],
+    "attendees": [
+      {
+        "name": "Michou",
+        "dates": [
+          {
+            "date": "2025-03-21",
+            "available": true
+          }
+        ]
+      },
+      {
+        "name": "Jean-Daniel",
+        "dates": [
+          {
+            "date": "2025-03-18",
+            "available": true
+          }
+        ]
+      },
+      {
+        "name": "Emmanuel",
+        "dates": [
+          {
+            "date": "2025-03-18",
+            "available": true
+          },
+          {
+            "date": "2025-03-21",
+            "available": true
+          }
+        ]
+      },
+      {
+        "name": "test",
+        "dates": [
+          {
+            "date": "2025-03-17",
+            "available": true
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-02-11T00:00",
+    "num_modification": 12,
+    "last_modification": "2025-02-11T22:28:24.839Z"
+  },
+  {
+    "id": "38b643aeb883",
+    "name": "The big sale",
+    "description": "I want to buy stuff at the mall, but don't want to go alone who is up?",
+    "author": "Jean D'eau",
+    "dates": [
+      "2025-03-10",
+      "2025-02-14"
+    ],
+    "attendees": [
+      {
+        "name": "Michou",
+        "dates": [
+          {
+            "date": "2025-03-10",
+            "available": true
+          }
+        ]
+      },
+      {
+        "name": "Jane Doe",
+        "dates": [
+          {
+            "date": "2025-02-14",
+            "available": true
+          }
+        ]
+      },
+      {
+        "name": "Emmanuel",
+        "dates": [
+          {
+            "date": "2025-03-10",
+            "available": true
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-02-12T14:00",
+    "num_modification": 5,
+    "last_modification": "2025-02-10T22:11:03.378Z"
+  }
+]
