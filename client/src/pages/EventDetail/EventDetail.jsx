@@ -10,8 +10,8 @@ import Swal from "sweetalert2";
 
 const EventDetail = () => {
   const { id } = useParams(); // Récupère l'ID de l'événement depuis l'URL
-  //const baseURL = "https://didlydoo-at29.onrender.com";
-  const baseURL = "http://localhost:3000";
+  const baseURL = "https://didlydoo-at29.onrender.com";
+  //const baseURL = "http://localhost:3000";
   const sanitizeInput = (value) => value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'@-]/g, ""); //Filtre sur les caractères admis à la saisie
   const [noAttendee, setNoAttendee] = useState(true); //Pour la vérification qu'il y a au moins un participant d'inscrit à l'événement
   const [event, setEvent] = useState(null);

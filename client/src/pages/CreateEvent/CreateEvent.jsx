@@ -12,8 +12,8 @@ const CreateEvent = () => {
   const [dateInput, setDateInput] = useState("");
   const navigate = useNavigate();
 
-  //const baseURL = "https://didlydoo-at29.onrender.com";
-  const baseURL = "http://localhost:3000";
+  const baseURL = "https://didlydoo-at29.onrender.com";
+  //const baseURL = "http://localhost:3000";
   const routeURL = "/api/events";
   const [isSubmitting, setIsSubmitting] = useState(false); //Utilisé pour afficher les messages d'erreur uniquement lors de la soumission du formulaire
   const [errorDate, setErrorDate] = useState(false);
