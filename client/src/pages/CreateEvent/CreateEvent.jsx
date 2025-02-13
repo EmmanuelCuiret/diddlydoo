@@ -20,6 +20,8 @@ const CreateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
+
     //Vérifie que tous les champs sont remplis avant de soumettre le formulaire
     if (!name.trim() || !description.trim() || !author.trim()) {
       setIsSubmitting(true); //Active la validation
@@ -35,7 +37,7 @@ const CreateEvent = () => {
 
     try {
       await axios.post(baseURL, newEvent);
-      alert("Événement créé avec succès !");
+      //alert("Événement créé avec succès !");
       navigate("/"); // Redirection vers la liste des événements
     } catch (error) {
       console.error("Erreur lors de la création de l'événement :", error);

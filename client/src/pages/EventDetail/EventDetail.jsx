@@ -154,15 +154,6 @@ const EventDetail = () => {
       return;
     }
 
-    //Comparaison de la date sélectionnée avec celle du jour
-    const today = new Date();
-    const inputDate = new Date(dateInput);
-
-    if (new Date(inputDate) < new Date(today)) {
-      alert("La date ne peut pas être antérieure à aujourd'hui");
-      return;
-    }
-
     //Confirmation de l'ajout de la nouvelle date à l'événement
     const confirmAdd = window.confirm(`Ajouter cette date ? \n${dateInput}`);
     if (!confirmAdd) return;
