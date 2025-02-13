@@ -28,7 +28,7 @@ body {
 }
 
 .edit-event-button {
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 /* Style de la carte principale affichant l'événement */
@@ -340,12 +340,6 @@ button:hover {
     font-size: 0.9rem;
   }
   .edit-event-button {
-    margin-left: 0px;
-  }
-}
-
-@media (max-width: 480px) {
-  .edit-event-button {
-    margin-left: 0px;
+    margin-left: 10px;
   }
 }
