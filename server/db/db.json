@@ -1,13 +1,54 @@
 [
   {
+    "id": "92a24edc1611",
+    "name": "test",
+    "author": "manu",
+    "description": "desc",
+    "dates": [
+      "2025-02-14",
+      "2025-02-15"
+    ],
+    "created_at": "2025-02-13T20:27:51.860Z",
+    "num_modification": 0,
+    "last_modification": "2025-02-13T20:27:51.860Z",
+    "attendees": [
+      {
+        "name": "A",
+        "dates": [
+          {
+            "date": "2025-02-14",
+            "available": true
+          }
+        ]
+      },
+      {
+        "name": "B",
+        "dates": [
+          {
+            "date": "2025-02-15",
+            "available": true
+          }
+        ]
+      },
+      {
+        "name": "C",
+        "dates": [
+          {
+            "date": "2025-02-15",
+            "available": true
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "7da9f8cb7839",
     "name": "The big sale",
     "author": "Nico",
     "description": "Lol",
     "dates": [
       "2025-04-22",
-      "2025-03-04",
-      "2025-02-28"
+      "2025-03-04"
     ],
     "created_at": "2025-02-12T16:05:46.742Z",
     "num_modification": 0,
@@ -56,6 +97,10 @@
         "dates": [
           {
             "date": "2025-02-27",
+            "available": true
+          },
+          {
+            "date": "2025-04-01",
             "available": true
           }
         ]

@@ -6,6 +6,55 @@ import * as mw from '../helpers/middlewares.mjs'
 
 const router = Router()
 
+/**
+ * DELETE /api/events/:eventId/:date
+ *
+ * Cette route supprime une date de l'événement spécifié ainsi que de tous
+ * les tableaux de dates des participants.
+ */
+router.route('/events/delete/:_id/:date')
+  .delete(mw.idSpecific, mw.getElem, async (req, res, next) => {
+    try {
+      const { _id, date } = req.params;
+      //console.log("🔹 Suppression de la date:", date, "pour l'événement:", _id);
+
+      const db = await getDB();
+
+      // Trouver l'événement
+      const eventIndex = db.data.findIndex(event => event.id === _id);
+      if (eventIndex === -1) {
+        //console.error("❌ Événement non trouvé !");
+        return res.status(404).send({ error: "Événement non trouvé" });
+      }
+
+      //console.log("✅ Événement trouvé :", db.data[eventIndex]);
+
+      // Supprimer la date de l'événement
+      db.data[eventIndex].dates = db.data[eventIndex].dates.filter(d => d !== date);
+      //console.log("✅ Dates après suppression :", db.data[eventIndex].dates);
+
+      // Supprimer la date pour chaque participant
+      if (db.data[eventIndex].attendees && Array.isArray(db.data[eventIndex].attendees)) {
+        db.data[eventIndex].attendees.forEach(attendee => {
+          attendee.dates = attendee.dates.filter(d => d.date !== date);
+        });
+        //console.log("✅ Participants mis à jour :", db.data[eventIndex].attendees);
+      } else {
+        //console.log("ℹ️ Aucun participant à mettre à jour.");
+      }
+
+      await db.write();
+      //console.log("✅ Base de données mise à jour !");
+      return res.send({ message: 'Date supprimée avec succès' });
+
+    } catch (error) {
+      //console.error("❌ Erreur lors de la suppression de la date :", error);
+      return res.status(500).send({ error: "Erreur serveur" });
+    }
+  });
+
+
+
 router.route('/events/:_id?')
   .get(async (req, res, next) => {
     const db = await getDB()
