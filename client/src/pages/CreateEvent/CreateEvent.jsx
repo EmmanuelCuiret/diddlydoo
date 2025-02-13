@@ -11,7 +11,9 @@ const CreateEvent = () => {
   const [dates, setDates] = useState([]);
   const [dateInput, setDateInput] = useState("");
   const navigate = useNavigate();
-  const baseURL = "https://didlydoo-at29.onrender.com/api/events";
+
+  const baseURL = "https://didlydoo-at29.onrender.com"; //http://localhost:3000
+  const routeURL = "/api/events";
   const [isSubmitting, setIsSubmitting] = useState(false); //Utilisé pour afficher les messages d'erreur uniquement lors de la soumission du formulaire
   const [errorDate, setErrorDate] = useState(false);
   const sanitizeInput = (value) => value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'@-]/g, ""); //Filtre sur les caractères admis à la saisie
@@ -19,8 +21,6 @@ const CreateEvent = () => {
   //Création de l'événement
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    
 
     //Vérifie que tous les champs sont remplis avant de soumettre le formulaire
     if (!name.trim() || !description.trim() || !author.trim()) {
@@ -36,7 +36,7 @@ const CreateEvent = () => {
     };
 
     try {
-      await axios.post(baseURL, newEvent);
+      await axios.post(baseURL + routeURL, newEvent);
       //alert("Événement créé avec succès !");
       navigate("/"); // Redirection vers la liste des événements
     } catch (error) {

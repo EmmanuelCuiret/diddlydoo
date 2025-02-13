@@ -86,8 +86,7 @@ h1 {
 }
 
 .event-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 20px var(--shadow-color);
+ transform: scale(1.02);
 }
 
 /* Titres des événements */
@@ -95,6 +94,7 @@ h1 {
   font-size: 1.5rem;
   margin: 10px 0;
   color: var(--accent-color);
+  box-shadow: 0 2px 20px var(--shadow-color);
 }
 
 .event-card p {
@@ -129,6 +129,7 @@ a:hover {
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
+  box-shadow: 0 2px 20px var(--shadow-color);
 }
 
 .participant-container h2 {
@@ -160,8 +161,8 @@ a:hover {
 }
 
 .participant-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px var(--shadow-color);
+  transform: scale(1.02);
+
 }
 
 /* Nom du participant */

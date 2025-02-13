@@ -6,7 +6,6 @@ import Logo from "../../assets/logo.png";
 
 function Home() {
   const baseURL = "https://didlydoo-at29.onrender.com";
-  const currentRoute = "/api/events";
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -35,7 +34,8 @@ function Home() {
 
     if (!confirmDelete) return; //Annuler la suppression de l'événement si l'utilisateur clique sur Annuler
     try {
-      await axios.delete(`${baseURL}${currentRoute}/${eventToRemove.id}`);
+      const routeURL = `/api/events/${eventToRemove.id}`;
+      await axios.delete(baseURL + routeURL);
       setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventToRemove.id));
       //alert("Événement supprimé avec succès !");
     } catch (error) {
@@ -54,7 +54,8 @@ function Home() {
       setLoadingAttendees(true);
 
       try {
-        const response = await axios.get(`${baseURL}/api/attendees`);
+        const routeURL = "/api/attendees";
+        const response = await axios.get(baseURL + routeURL);
 
         const participants = response.data
           .filter((participant) => participant.events?.length > 0)
@@ -75,8 +76,9 @@ function Home() {
   };
 
   useEffect(() => {
+    const routeURL = "/api/events";
     axios
-      .get(baseURL + currentRoute)
+      .get(baseURL + routeURL)
       .then((response) => {
         setEvents(response.data);
         setLoading(false);

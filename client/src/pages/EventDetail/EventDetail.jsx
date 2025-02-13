@@ -6,10 +6,12 @@ import "./EventDetail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const EventDetail = () => {
   const { id } = useParams(); // Récupère l'ID de l'événement depuis l'URL
-  const baseURL = `https://didlydoo-at29.onrender.com/api/events/${id}`;
+  const baseURL = "https://didlydoo-at29.onrender.com";
   const sanitizeInput = (value) => value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'@-]/g, ""); //Filtre sur les caractères admis à la saisie
   const [noAttendee, setNoAttendee] = useState(true); //Pour la vérification qu'il y a au moins un participant d'inscrit à l'événement
   const [event, setEvent] = useState(null);
@@ -36,7 +38,8 @@ const EventDetail = () => {
 
   const fetchEvent = async () => {
     try {
-      const response = await axios.get(`https://didlydoo-at29.onrender.com/api/events/${id}`);
+      const routeURL = `/api/events/${id}`;
+      const response = await axios.get(baseURL + routeURL);
       setEvent(response.data); // Met à jour l'état avec les nouvelles données
     } catch (error) {
       console.error("Erreur lors de la récupération de l'événement :", error);
@@ -85,8 +88,8 @@ const EventDetail = () => {
         name: attendeeName,
         dates: attendeeDates.map((d) => ({ date: d, available: true })),
       };
-
-      await axios.patch(`https://didlydoo-at29.onrender.com/api/events/${id}/attend`, updateAttendee);
+      const routeURL = `/api/events/${id}/attend`;
+      await axios.patch(baseURL + routeURL, updateAttendee);
 
       await fetchEvent();
       setEditingAttendee(null);
@@ -113,8 +116,7 @@ const EventDetail = () => {
     //Demande de confirmation d'ajout du participant
     const confirmAdd = window.confirm(`Ajouter ce participant ?\nNom : "${attendeeNameForAdd}"\nDates sélectionnées : ${selectedDates.map((d) => d.date).join(", ")}`);
     if (!confirmAdd) return; // Annule si l'utilisateur clique sur "Annuler"
-
-    const endpoint = `https://didlydoo-at29.onrender.com/api/events/${id}/attend`;
+    const routeURL = `/api/events/${id}/attend`;
 
     const newParticipant = {
       name: attendeeNameForAdd,
@@ -125,7 +127,7 @@ const EventDetail = () => {
     };
 
     try {
-      await axios.post(endpoint, newParticipant);
+      await axios.post(baseURL + routeURL, newParticipant);
       await fetchEvent(); //Pour récupérer les données mises à jour
       toast.success("Participant ajouté avec succès !");
       setAttendeeNameForAdd(""); // Réinitialisation du formulaire
@@ -139,7 +141,7 @@ const EventDetail = () => {
 
   const handleCancelAddAttendee = () => {
     // Réinitialisation du formulaire
-    setAttendeeName("");
+    setAttendeeNameForAdd("");
     setSelectedDates([]);
     setIsSubmitting(false);
     setIsSubmittingNewDate(false);
@@ -159,7 +161,8 @@ const EventDetail = () => {
     if (!confirmAdd) return;
 
     try {
-      await axios.post(`https://didlydoo-at29.onrender.com/api/events/${id}/add_dates`, { dates: [dateInput] });
+      const routeURL = `/api/events/${id}/add_dates`;
+      await axios.post(baseURL + routeURL, { dates: [dateInput] });
       await fetchEvent(); // Rafraîchir les données après ajout
       toast.success("Date ajoutée avec succès !");
       setDateInput(""); //Réinitialiser le champ
@@ -196,7 +199,8 @@ const EventDetail = () => {
     };
 
     try {
-      await axios.patch(baseURL, updatedFields);
+      const routeURL = `/api/events/${id}`;
+      await axios.patch(baseURL + routeURL, updatedFields);
       //Fusionner les nouvelles données avec l'événement existant
       setEvent((prevEvent) => ({
         ...prevEvent, //Garde les anciennes valeurs
@@ -216,7 +220,8 @@ const EventDetail = () => {
     if (!window.confirm(`Supprimer la date : "${dateToDelete}" ?`)) return;
 
     try {
-      await axios.delete(`https://didlydoo-at29.onrender.com/api/events/${eventId}/${dateToDelete}`);
+      const routeURL = `/api/events/${eventId}/${dateToDelete}`;
+      await axios.delete(baseURL + routeURL);
       toast.success("Date supprimée avec succès!");
       await fetchEvent(); //Recharger les détails de l'événement
     } catch (err) {
@@ -227,7 +232,8 @@ const EventDetail = () => {
 
   const handleShowAttendeeDetails = async (name) => {
     try {
-      const response = await axios.get(`https://didlydoo-at29.onrender.com/api/attendees/${name}`);
+      const routeURL = `/api/attendees/${name}`;
+      const response = await axios.get(baseURL + routeURL);
       setEvents(response.data.events);
       setAttendeeNameForParticipationsDetail(name);
       setShowAttendeeDetails(true);
@@ -242,10 +248,12 @@ const EventDetail = () => {
   //Suppression d'un participant à un événement
   const handleDeleteAttendee = async (eventId, attendeeName, e) => {
     e.preventDefault();
+
     if (!window.confirm(`Supprimer le participant : "${attendeeName}" ?`)) return;
 
     try {
-      await axios.delete(`https://didlydoo-at29.onrender.com/api/events/${eventId}/attendees/${attendeeName}`);
+      const routeURL = `/api/events/${eventId}/attendees/${attendeeName}`;
+      await axios.delete(baseURL + routeURL);
       await fetchEvent();
       toast.success("Participant supprimé avec succès!");
     } catch (err) {
@@ -276,7 +284,7 @@ const EventDetail = () => {
     <div className="event-detail-container">
       {modif ? (
         // Mode modification
-        <div className="event-card">
+        <div className="event-card-no-scale">
           <h2>Modifier l'événement</h2>
           <form onSubmit={handleSubmitModif} className="form-modif">
             <div className="form-group">
@@ -304,7 +312,7 @@ const EventDetail = () => {
         </div>
       ) : (
         // Mode affichage
-        <div className="event-card">
+        <div className="event-card-no-scale">
           <h1>{event.name}</h1>
           <button className="edit-event-button" onClick={() => setModif(true)}>
             Modifier l'événement
@@ -374,8 +382,9 @@ const EventDetail = () => {
             </div>
           </div>
 
+          <h3 style={{ textAlign: "center" }}>Participants</h3>
+
           <div className="participant-section">
-            <h3>Participants</h3>
             {Array.isArray(event.dates) && event.dates.length > 0 ? (
               <table className="participant-table" cellPadding="5">
                 <thead>

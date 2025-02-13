@@ -27,12 +27,10 @@ body {
   padding: 20px;
 }
 
-.edit-event-button {
-  margin-left: 10px;
-}
-
 /* Style de la carte principale affichant l'événement */
-.event-card {
+.event-card,
+.event-card-no-scale
+ {
   background: var(--card-bg);
   border-radius: 10px;
   padding: 20px;
@@ -42,7 +40,7 @@ body {
    */
   text-align: left;
   margin-bottom: 5px;
-  box-shadow: 0 8px 20px var(--shadow-color);
+  box-shadow: 0 2px 20px var(--shadow-color);
 }
 
 /* Titres dans la carte d'événement */
@@ -106,6 +104,7 @@ a:hover {
   align-items: flex-start; /* Aligne le bouton en haut */
   gap: 0; /* Espacement entre l'input et le bouton */
   padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .input-button-container button {
@@ -158,7 +157,7 @@ a:hover {
 
 /* Gestion des erreurs */
 .input-error {
-  border: 2px solid red !important;
+  border: 2px solid red;
 }
 
 .error-message {
@@ -242,8 +241,9 @@ a:hover {
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 10px;
-  overflow: hidden;
+
   border: 1px solid var(--border-color);
+  overflow-x: auto;
 }
 
 .participant-table th,
@@ -260,9 +260,9 @@ a:hover {
 
 .participant-section {
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: -10px;
   text-align: center;
-  overflow-x: auto;
+  overflow: auto;
 }
 
 /* Section d'édition d'un participant */
@@ -338,8 +338,5 @@ button:hover {
   .participant-table td {
     padding: 5px;
     font-size: 0.9rem;
-  }
-  .edit-event-button {
-    margin-left: 10px;
   }
 }
