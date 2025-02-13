@@ -5,7 +5,8 @@ import "./Home.css";
 import Logo from "../../assets/logo.png";
 
 function Home() {
-  const baseURL = "https://didlydoo-at29.onrender.com";
+  //const baseURL = "https://didlydoo-at29.onrender.com";
+  const baseURL = "http://localhost:3000";
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);

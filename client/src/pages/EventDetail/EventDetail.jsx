@@ -6,12 +6,12 @@ import "./EventDetail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
+import Swal from "sweetalert2";
 
 const EventDetail = () => {
   const { id } = useParams(); // Récupère l'ID de l'événement depuis l'URL
-  const baseURL = "https://didlydoo-at29.onrender.com";
+  //const baseURL = "https://didlydoo-at29.onrender.com";
+  const baseURL = "http://localhost:3000";
   const sanitizeInput = (value) => value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'@-]/g, ""); //Filtre sur les caractères admis à la saisie
   const [noAttendee, setNoAttendee] = useState(true); //Pour la vérification qu'il y a au moins un participant d'inscrit à l'événement
   const [event, setEvent] = useState(null);
@@ -107,15 +107,29 @@ const EventDetail = () => {
   const handleAddAttendee = async (e) => {
     e.preventDefault();
 
-    //Vérifications
+    // Vérifications
     if (!attendeeNameForAdd || !attendeeNameForAdd.trim() || selectedDates.length === 0) {
-      setIsSubmitting(true); //Active la validation
+      setIsSubmitting(true); // Active la validation
       return;
     }
 
-    //Demande de confirmation d'ajout du participant
-    const confirmAdd = window.confirm(`Ajouter ce participant ?\nNom : "${attendeeNameForAdd}"\nDates sélectionnées : ${selectedDates.map((d) => d.date).join(", ")}`);
-    if (!confirmAdd) return; // Annule si l'utilisateur clique sur "Annuler"
+    // Demande de confirmation avec SweetAlert2
+    const result = await Swal.fire({
+      title: "Confirmer l'ajout",
+      html: `
+        <p>Ajouter ce participant ?</p>
+        <strong>Nom :</strong> "${attendeeNameForAdd}"<br/>
+        <strong>Dates sélectionnées :</strong> ${selectedDates.map((d) => d.date).join(", ")}
+      `,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Oui, ajouter",
+      cancelButtonText: "Annuler",
+    });
+
+    // Si l'utilisateur annule, on stoppe ici
+    if (!result.isConfirmed) return;
+
     const routeURL = `/api/events/${id}/attend`;
 
     const newParticipant = {
@@ -128,7 +142,7 @@ const EventDetail = () => {
 
     try {
       await axios.post(baseURL + routeURL, newParticipant);
-      await fetchEvent(); //Pour récupérer les données mises à jour
+      await fetchEvent(); // Pour récupérer les données mises à jour
       toast.success("Participant ajouté avec succès !");
       setAttendeeNameForAdd(""); // Réinitialisation du formulaire
       setSelectedDates([]);
@@ -220,7 +234,7 @@ const EventDetail = () => {
     if (!window.confirm(`Supprimer la date : "${dateToDelete}" ?`)) return;
 
     try {
-      const routeURL = `/api/events/${eventId}/${dateToDelete}`;
+      const routeURL = `/api/events/delete/${eventId}/${dateToDelete}`;
       await axios.delete(baseURL + routeURL);
       toast.success("Date supprimée avec succès!");
       await fetchEvent(); //Recharger les détails de l'événement
@@ -398,6 +412,9 @@ const EventDetail = () => {
                         }}
                       >
                         {new Date(date.date).toLocaleDateString(navigator.language)}
+                        <button type="button" onClick={(e) => handleDeleteEvenDate(event.id, date.date, e)}>
+                          X
+                        </button>
                       </th>
                     ))}
                     {!editingAttendee && <th colSpan="2">Action</th>}
