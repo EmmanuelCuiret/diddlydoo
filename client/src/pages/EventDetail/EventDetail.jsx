@@ -412,7 +412,7 @@ const EventDetail = () => {
                         }}
                       >
                         {new Date(date.date).toLocaleDateString(navigator.language)}
-                        <button type="button" onClick={(e) => handleDeleteEvenDate(event.id, date.date, e)}>
+                        <button className="buttonX" type="button" onClick={(e) => handleDeleteEvenDate(event.id, date.date, e)}>
                           X
                         </button>
                       </th>

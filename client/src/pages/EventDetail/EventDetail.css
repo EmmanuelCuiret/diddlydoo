@@ -29,8 +29,7 @@ body {
 
 /* Style de la carte principale affichant l'événement */
 .event-card,
-.event-card-no-scale
- {
+.event-card-no-scale {
   background: var(--card-bg);
   border-radius: 10px;
   padding: 20px;
@@ -83,6 +82,10 @@ button {
 
 button:hover {
   background: var(--hover-color);
+}
+
+.buttonX {
+  padding: 8px;
 }
 
 /* Lien stylisé */
